@@ -4,12 +4,6 @@ Created on Sat May  7 06:54:25 2022
 
 @author: tobias Fog
 """
-# -*- coding: utf-8 -*-
-"""
-Created on Sat May  7 06:54:25 2022
-
-@author: tobias Fog
-"""
 import requests as rq
 from  io import BytesIO
 import pandas as pd
