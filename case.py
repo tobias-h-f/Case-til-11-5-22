@@ -4,6 +4,14 @@ Created on Sat May  7 06:54:25 2022
 
 @author: tobias Fog
 """
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May  7 06:54:25 2022
+
+@author: tobias Fog
+"""
+import requests as rq
+from  io import BytesIO
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -11,12 +19,15 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 from sklearn.model_selection import RandomizedSearchCV
-from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_auc_score
 
 '''Load data - data står som komma sepereret i en enkelt kolonne, derfor split 
 både data og kolonner på komma'''
+url = 'https://raw.github.com/tobias-h-f/Case-til-11-5-22/main/DataScientist-Case-Dataset.xlsx'
 
-df_temp = pd.read_excel(r'/Users/tobiasfog/Dropbox/Mac/Downloads/DataScientist-Case-Dataset.xlsx')
+data = rq.get(url).content
+df_temp = pd.read_excel(BytesIO(data))
 
 df = df_temp.iloc[:, 0].str.split(',', expand=True)
 df.columns = [n.replace('"', '') for n in df_temp.columns.str.split(',')[0]]
@@ -30,8 +41,6 @@ kolonne credit_account_id skal derfor fjernes sammen med customer id'''
 
 print('unique values in features:')
 [print(set(df[x])) for x in df.columns]
-
-
 
 cols_to_remove = ['customer_id', 'credit_account_id']
 
